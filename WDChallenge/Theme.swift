@@ -94,6 +94,6 @@ var textColor: UIColor {
 }
 
 var standardTextFont: UIFont {
-    return UIFont(name: "HelveticaNeue-Light", size: 20)!
+    return UIFont(name: "HelveticaNeue-Light", size: 15)!
 }
 
