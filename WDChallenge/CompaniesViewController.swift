@@ -38,8 +38,7 @@ class CompaniesViewController: UITableViewController {
         serviceWrapper.delegate = self
         searchBar.delegate = self
         
-        refresh()
-        loadRefreshControl()
+        initialSetup()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -67,6 +66,9 @@ class CompaniesViewController: UITableViewController {
             controller.company = company
         }
         searchBar.text = ""
+        if searchBar.isFirstResponder() {
+                searchBar.resignFirstResponder()
+        }
         
         emptyTitleForBackButton()
     }
@@ -123,6 +125,13 @@ class CompaniesViewController: UITableViewController {
         }
     }
     
+    // MARK:- Initialize
+    
+    func initialSetup() {
+        refresh()
+        loadRefreshControl()
+    }
+    
     // MARK:- Refresh Control
     
     func loadRefreshControl() {
@@ -140,6 +149,12 @@ class CompaniesViewController: UITableViewController {
         serviceWrapper.getCompanies()
     }
     
+    // MARK:- hideKeyboard
+    
+    func hideKeyboard() {
+        searchBar.endEditing(true)
+    }
+    
 }
 
 extension CompaniesViewController: UISearchBarDelegate {
@@ -153,11 +168,16 @@ extension CompaniesViewController: UISearchBarDelegate {
             companies = originalData
             filterByDeparments()
             tableView.reloadData()
+            searchBar.resignFirstResponder()
         }
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         filterCompaniesBasedOnName(searchBar.text!)
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarResultsListButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
